@@ -1,61 +1,61 @@
 import React from 'react'
-import {Switch, Redirect, Route} from 'react-router-dom'
+import { Routes, Route, Navigate } from "react-router-dom";
  
 // common pages
-import Home from '../pages/common/home'
-import About from '../pages/common/about'
-import Contact from '../pages/common/contact'
+import Home from '../pages/common/Home'
+import About from '../pages/common/About'
+import Contact from '../pages/common/Contact'
 
 // Authenticated pages
-import Login from '../pages/auth/login'
-import Register from '../pages/auth/register'
+import Login from '../pages/auth/Login'
+import Register from '../pages/auth/Register'
 
 
 // Admin pages
-import AdminDashboard from '../pages/admin/adminDashboard'
-import EmployeedList from '../pages/admin/employeeList'
-import LeaveRequests from '../pages/admin/leaveRequests'
+import AdminDashboard from '../pages/admin/AdminDashboard'
+import EmployeeList from '../pages/admin/EmployeeList'
+import LeaveRequests from '../pages/admin/LeaveRequests'
 
 
 // Employee pages
-import UserDashboard from '../pages/employee/userDashboard'
-import Profile from '../pages/employee/profile'
-import LeaveHistory from '../pages/employee/leaveHistory'
-import LeaveForm from '../pages/employee/leaveForm'
+import UserDashboard from '../pages/employee/UserDashboard'
+import Profile from '../pages/employee/Profile'
+import LeaveHistory from '../pages/employee/LeaveHistory'
+import LeaveForm from '../pages/employee/LeaveForm'
 
 
 
 const AppRoutes = () => {
   return (
 
-    <Switch>
+   <Routes>
 
-        {/* Common routes */}
-        <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/contact" component={Contact} />
+      {/* Common */}
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
 
-        {/* Auth routes */}
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
+      {/* Auth */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-        {/* Admin routes */}
-        <Route path="/admin/dashboard" component={AdminDashboard} />
-        <Route path="/admin/employee-list" component={EmployeedList} />
-        <Route path="/admin/leave-requests" component={LeaveRequests} />
+      {/* Admin */}
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/employees" element={<EmployeeList />} />
+      <Route path="/admin/leaves" element={<LeaveRequests />} />
 
+      {/* Employee */}
+      <Route path="/employee/userdashboard" element={<UserDashboard />} />
+      <Route path="/employee/applyleave" element={<LeaveForm />} />
+      <Route path="/employee/history" element={<LeaveHistory />} />
+      <Route path="/employee/profile" element={<Profile />} />
 
-        {/* Employee routes */}
-        <Route path="/employee/dashboard" component={UserDashboard} />
-        <Route path="/employee/profile" component={Profile} />
-        <Route path="/employee/leave-history" component={LeaveHistory} />
-        <Route path="/employee/leave-form" component={LeaveForm} />
+      {/* Default Route */}
+      <Route path="*" element={<Navigate to="/" />} />
 
-        {/* Redirect any unknown routes to home */}
-        <Redirect to="/" />
-    </Switch>
+    </Routes>
     
-  )
+  );
 }
 
 export default AppRoutes;
