@@ -2,9 +2,9 @@ import React from 'react'
 import { Routes, Route, Navigate } from "react-router-dom";
  
 // common pages
-import Home from '../pages/common/Home'
-import About from '../pages/common/About'
-import Contact from '../pages/common/Contact'
+import Home from '../pages/common/home'
+import About from '../pages/common/about'
+import Contact from '../pages/common/contact'
 
 // Authenticated pages
 import Login from '../pages/auth/Login'
