@@ -9,9 +9,18 @@ function App() {
 
   return (
     <>
-     <Navbar />
-      <AppRoutes />
+    <div className="d-flex flex-column min-vh-100">
+
+      <Navbar />
+
+      {/* Main Content */}
+      <main className="flex-grow-1">
+        <AppRoutes />
+      </main>
+
       <Footer />
+
+    </div>
     </>
   )
 }
