@@ -7,18 +7,18 @@ import About from '../pages/common/about'
 import Contact from '../pages/common/contact'
 
 // Authenticated pages
-import Login from '../pages/auth/Login'
-import Register from '../pages/auth/Register'
+import Login from '../pages/auth/login'
+import Register from '../pages/auth/register'
 
 
 // Admin pages
-import AdminDashboard from '../pages/admin/AdminDashboard'
+import AdminDashboard from '../pages/admin/adminDashboard'
 import EmployeeList from '../pages/admin/EmployeeList'
 import LeaveRequests from '../pages/admin/LeaveRequests'
 
 
 // Employee pages
-import UserDashboard from '../pages/employee/UserDashboard'
+import UserDashboard from '../pages/employee/userDashboard'
 import Profile from '../pages/employee/Profile'
 import LeaveHistory from '../pages/employee/LeaveHistory'
 import LeaveForm from '../pages/employee/LeaveForm'

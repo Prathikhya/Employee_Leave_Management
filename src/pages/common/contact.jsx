@@ -3,7 +3,7 @@ import React from 'react'
 const Contact = () => {
   return (
      <div
-      className="d-flex justify-content-evenly align-items-center mt-5"
+      className="d-flex justify-content-evenly align-items-center mt-1"
       style={{
         minHeight: "85vh",
         

@@ -4,7 +4,6 @@ const EditEmployee = () => {
   return (
     <div>
       EditEmployee
-EditEmployee
 
     </div>
   )

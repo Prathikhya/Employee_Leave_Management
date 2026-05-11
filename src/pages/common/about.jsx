@@ -5,6 +5,17 @@ const about = () => {
         <div className="container mt-5">
 
       <div className="row align-items-center">
+        {/* Right Column - Image */}
+        <div className="col-md-6 text-center">
+          <img
+            src="https://www.hivepayroll.co.in/wp-content/uploads/2023/03/payroll-and-leave-management-software.png"
+            alt="Leave Management"
+            className="img-fluid"
+            style={{ maxHeight: "400px" }}
+          />
+        </div>
+
+        
 
         {/* Left Column - Details */}
         <div className="col-md-6">
@@ -19,15 +30,6 @@ const about = () => {
          
         </div>
 
-        {/* Right Column - Image */}
-        <div className="col-md-6 text-center">
-          <img
-            src="https://www.hivepayroll.co.in/wp-content/uploads/2023/03/payroll-and-leave-management-software.png"
-            alt="Leave Management"
-            className="img-fluid"
-            style={{ maxHeight: "400px" }}
-          />
-        </div>
 
       </div>
 
