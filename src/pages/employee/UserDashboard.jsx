@@ -117,7 +117,7 @@ const stats = [
               />
 
               <div>
-                <h3 className="fw-bold mb-1">Prathikhya Devi</h3>
+                <h3 className="fw-bold mb-1">employee 1</h3>
                 <p className="text-primary fw-semibold mb-2">
                   Software Engineer
                 </p>
