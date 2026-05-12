@@ -12,9 +12,14 @@ import Register from '../pages/auth/register'
 
 
 // Admin pages
-import AdminDashboard from '../pages/admin/adminDashboard'
-import EmployeeList from '../pages/admin/EmployeeList'
-import LeaveRequests from '../pages/admin/LeaveRequests'
+import Dashboard from '../pages/admin/dashboard'
+import EmployeeList from '../pages/admin/employeeList'
+import LeaveRequests from '../pages/admin/leaverequests'
+import CalenderAdmin from '../pages/admin/CalenderAdmin'
+import SalaryEm from '../pages/admin/SalaryEm'
+import Setting from '../pages/admin/Setting'
+import attendence from '../pages/admin/attendence'
+import Reports from '../pages/admin/Reports'
 
 
 // Employee pages
@@ -40,9 +45,16 @@ const AppRoutes = () => {
       <Route path="/register" element={<Register />} />
 
       {/* Admin */}
-      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/dashboard" element={<Dashboard />} />
       <Route path="/admin/employees" element={<EmployeeList />} />
-      <Route path="/admin/leaves" element={<LeaveRequests />} />
+      <Route path="/admin/leaverequests" element={<LeaveRequests />} />
+      <Route path="/admin/calender" element={<CalenderAdmin />} />
+      <Route path="/admin/salary" element={<SalaryEm />} />
+      <Route path="/admin/setting" element={<Setting />} />
+      <Route path="/admin/attendence" element={<attendence />} />
+      <Route path="/admin/reports" element={<Reports />} />
+
+
 
       {/* Employee */}
       <Route path="/employee/userdashboard" element={<UserDashboard />} />
