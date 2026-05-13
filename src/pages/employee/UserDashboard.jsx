@@ -45,6 +45,22 @@ const stats = [
           </Link>
 
           <Link
+            to="/dashboard"
+            className="btn btn-dark border border-secondary rounded-4 text-start py-3"
+          >
+            Attendance
+          </Link>
+
+
+<Link
+            to="/dashboard"
+            className="btn btn-dark border border-secondary rounded-4 text-start py-3"
+          >
+            Leaves
+          </Link>
+
+
+          <Link
             to="/calendar"
             className="btn btn-dark border border-secondary rounded-4 text-start py-3"
           >

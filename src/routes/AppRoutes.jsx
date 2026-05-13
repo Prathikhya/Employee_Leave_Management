@@ -23,10 +23,16 @@ import Reports from '../pages/admin/Reports'
 
 
 // Employee pages
-import UserDashboard from '../pages/employee/userDashboard'
-import Profile from '../pages/employee/Profile'
-import LeaveHistory from '../pages/employee/LeaveHistory'
-import LeaveForm from '../pages/employee/LeaveForm'
+import UserDashboard from '../pages/employee/UserDashboard'
+import UserAttendance from '../pages/employee/UserAttendance'
+import UserLeaves from '../pages/employee/UserLeaves'
+import UserSalary from '../pages/employee/UserSalary'
+import UserCalendar from '../pages/employee/UserCalendar'
+import UserSettings from '../pages/employee/UserSettings'
+
+
+// Authority pages
+import Leaves from '../pages/authorities/Leaves'
 
 
 
@@ -57,10 +63,15 @@ const AppRoutes = () => {
 
 
       {/* Employee */}
-      <Route path="/employee/userdashboard" element={<UserDashboard />} />
-      <Route path="/employee/applyleave" element={<LeaveForm />} />
-      <Route path="/employee/history" element={<LeaveHistory />} />
-      <Route path="/employee/profile" element={<Profile />} />
+      <Route path="/employee/dashboard" element={<UserDashboard />} />
+      <Route path="/employee/applyleave" element={<UserLeaves />} />
+      <Route path="/employee/attendance" element={<UserAttendance />} />
+      <Route path="/employee/salary" element={<UserSalary />} />
+      <Route path="/employee/calendar" element={<UserCalendar />} />
+      <Route path="/employee/settings" element={<UserSettings />} />
+
+      {/* Authority */}
+      <Route path="/authority/leaves" element={<Leaves />} />
 
       {/* Default Route */}
       <Route path="*" element={<Navigate to="/" />} />
