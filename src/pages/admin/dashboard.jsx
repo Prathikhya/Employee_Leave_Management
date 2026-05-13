@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Sidebar from "../../components/Sidebar";
 
 
 const Dashboard = () => {
@@ -92,7 +93,9 @@ const Dashboard = () => {
 
 
         {/* Sidebar */}
-        <div
+        <Sidebar />
+
+        {/* <div
           className="bg-dark text-white p-4 d-flex flex-column"
           style={{ width: '280px', minHeight: '100vh' }}
         >
@@ -129,7 +132,7 @@ const Dashboard = () => {
               Logout
             </button>
           </div>
-        </div>
+        </div> */}
 
 
 
