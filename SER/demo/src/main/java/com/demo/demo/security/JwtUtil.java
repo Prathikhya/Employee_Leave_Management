@@ -1,5 +1,6 @@
 package com.demo.demo.security;
 
+
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
@@ -30,6 +31,27 @@ public class JwtUtil {
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
+    private boolean isTokenExpired(String token){
+
+    Date expiration = Jwts.parserBuilder()
+            .setSigningKey(getSignKey())
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .getExpiration();
+
+    return expiration.before(new Date());
+}
+
+    public boolean validateToken(String token, String email){
+
+    final String extractedEmail =
+            extractEmail(token);
+
+    return extractedEmail.equals(email)
+            && !isTokenExpired(token);
+}
 
     public String extractEmail(String token){
 
