@@ -54,7 +54,7 @@ public class LeaveController {
             @PathVariable Long userId){
 
         List<LeaveRequest> leaves =
-                leaveRepository.findByUserId(userId);
+                leaveRepository.findByEmployeeId(userId);
 
         return ResponseEntity.ok(leaves);
     }

@@ -40,6 +40,6 @@ public class LeaveRequest {
     private LeaveStatus status = LeaveStatus.PENDING;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "employee_id")
     private User employee;
 }

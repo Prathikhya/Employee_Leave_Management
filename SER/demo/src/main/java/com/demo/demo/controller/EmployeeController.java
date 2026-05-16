@@ -83,7 +83,7 @@ public class EmployeeController {
             @PathVariable Long userId){
 
         List<LeaveRequest> leaves =
-                leaveRepository.findByUserId(userId);
+                leaveRepository.findByEmployeeId(userId);
 
         return ResponseEntity.ok(leaves);
     }
@@ -101,7 +101,7 @@ public class EmployeeController {
                         new RuntimeException("User Not Found"));
 
         List<LeaveRequest> leaves =
-                leaveRepository.findByUserId(userId);
+                leaveRepository.findByEmployeeId(userId);
 
         long approvedLeaves =
                 leaves.stream()
