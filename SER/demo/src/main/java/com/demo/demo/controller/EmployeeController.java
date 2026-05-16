@@ -10,7 +10,7 @@ import com.demo.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +32,8 @@ public class EmployeeController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','EMPLOYEE')")
 
     // =========================
     // GET EMPLOYEE PROFILE

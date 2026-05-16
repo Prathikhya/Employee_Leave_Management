@@ -1,6 +1,8 @@
 package com.demo.demo.repository;
 
 import com.demo.demo.entity.LeaveRequest;
+import com.demo.demo.entity.User;
+import com.demo.demo.enums.LeaveStatus;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,4 +12,10 @@ public interface LeaveRepository
         extends JpaRepository<LeaveRequest, Long> {
 
     List<LeaveRequest> findByUserId(Long userId);
+
+    List<LeaveRequest> findByEmployee(User employee);
+
+    List<LeaveRequest> findByStatus(LeaveStatus status);
+
+    Long countByStatus(LeaveStatus status);
 }

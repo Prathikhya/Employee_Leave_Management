@@ -2,12 +2,13 @@ package com.demo.demo.controller;
 
 import com.demo.demo.entity.LeaveRequest;
 import com.demo.demo.entity.User;
+import com.demo.demo.enums.LeaveStatus;
 
 import com.demo.demo.repository.LeaveRepository;
 import com.demo.demo.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -24,6 +25,8 @@ public class AdminController {
 
     @Autowired
     private LeaveRepository leaveRepository;
+
+    @PreAuthorize("hasRole('ADMIN')")
 
     // GET ALL USERS
 
@@ -52,7 +55,7 @@ public class AdminController {
                         .orElseThrow(() ->
                                 new RuntimeException("Leave Not Found"));
 
-        leave.setStatus("APPROVED");
+        leave.setStatus(LeaveStatus.APPROVED);
 
         return leaveRepository.save(leave);
     }
@@ -68,7 +71,7 @@ public class AdminController {
                         .orElseThrow(() ->
                                 new RuntimeException("Leave Not Found"));
 
-        leave.setStatus("REJECTED");
+        leave.setStatus(LeaveStatus.REJECTED);
 
         return leaveRepository.save(leave);
     }
@@ -100,7 +103,7 @@ public class AdminController {
                         .stream()
                         .filter(leave ->
                                 leave.getStatus()
-                                        .equals("APPROVED"))
+                                        .equals(LeaveStatus.APPROVED))
                         .count();
 
         long pendingLeaves =
@@ -108,7 +111,7 @@ public class AdminController {
                         .stream()
                         .filter(leave ->
                                 leave.getStatus()
-                                        .equals("PENDING"))
+                                        .equals(LeaveStatus.PENDING))
                         .count();
 
         Map<String, Long> stats =

@@ -1,12 +1,15 @@
 package com.demo.demo.entity;
 
+import com.demo.demo.enums.Role;
+
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -22,5 +25,20 @@ public class User {
 
     private String password;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+
+
+private Double salary;
+
+private String employeeCode;
+
+private String designation;
+
+private String department;
+
+private Double monthlySalary;
+
+private LocalDate joiningDate;
 }

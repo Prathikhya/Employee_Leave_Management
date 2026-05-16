@@ -2,14 +2,14 @@ package com.demo.demo.controller;
 
 import com.demo.demo.entity.LeaveRequest;
 import com.demo.demo.entity.User;
-
+import com.demo.demo.enums.LeaveStatus;
 import com.demo.demo.repository.LeaveRepository;
 import com.demo.demo.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -26,6 +26,8 @@ public class ManagementController {
 
     @Autowired
     private LeaveRepository leaveRepository;
+
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
 
     // =========================
     // VIEW ALL STAFF
@@ -65,7 +67,7 @@ public class ManagementController {
                         .orElseThrow(() ->
                                 new RuntimeException("Leave Not Found"));
 
-        leave.setStatus("APPROVED");
+        leave.setStatus(LeaveStatus.APPROVED);
 
         leaveRepository.save(leave);
 
@@ -85,7 +87,7 @@ public class ManagementController {
                         .orElseThrow(() ->
                                 new RuntimeException("Leave Not Found"));
 
-        leave.setStatus("REJECTED");
+        leave.setStatus(LeaveStatus.REJECTED);
 
         leaveRepository.save(leave);
 

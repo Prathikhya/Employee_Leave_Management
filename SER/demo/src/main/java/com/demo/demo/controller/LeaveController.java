@@ -38,7 +38,7 @@ public class LeaveController {
                 .orElseThrow(() ->
                         new RuntimeException("User Not Found"));
 
-        leaveRequest.setUser(user);
+        leaveRequest.setEmployee(user);
 
         leaveRepository.save(leaveRequest);
 

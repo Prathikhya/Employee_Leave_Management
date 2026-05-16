@@ -6,29 +6,25 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "salaries")
+@Table(name = "attendance")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Salary {
+public class Attendance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double basicSalary;
+    private LocalDate date;
 
-    private Double bonus;
+    private boolean present;
 
-    private Double deduction;
+    private String checkInTime;
 
-    private Double netSalary;
-
-    private LocalDate salaryDate;
-
-    private String paymentStatus;
+    private String checkOutTime;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")

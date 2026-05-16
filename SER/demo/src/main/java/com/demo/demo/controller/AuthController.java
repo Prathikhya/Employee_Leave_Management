@@ -5,6 +5,7 @@ import com.demo.demo.dto.RegisterRequest;
 import com.demo.demo.entity.User;
 import com.demo.demo.repository.UserRepository;
 import com.demo.demo.security.JwtUtil;
+import com.demo.demo.enums.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,7 @@ public class AuthController {
                 passwordEncoder.encode(request.getPassword())
         );
 
-        user.setRole(request.getRole());
+        user.setRole(Role.EMPLOYEE);
 
         userRepository.save(user);
 
