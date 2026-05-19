@@ -1,8 +1,11 @@
 package com.demo.demo.config;
 
 import com.demo.demo.security.JwtAuthFilter;
+import com.demo.demo.security.JwtAuthenticationEntryPoint;
+
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +22,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+        @Autowired
+private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     private final JwtAuthFilter jwtAuthFilter;
 
@@ -66,7 +72,10 @@ public class SecurityConfig {
                 .addFilterBefore(
                         jwtAuthFilter,
                         UsernamePasswordAuthenticationFilter.class
-                );
+                )
+                .exceptionHandling(ex ->
+        ex.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+);
 
         return http.build();
     }
