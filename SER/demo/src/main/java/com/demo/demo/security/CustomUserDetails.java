@@ -1,26 +1,28 @@
 package com.demo.demo.security;
 
 import com.demo.demo.entity.User;
-import lombok.AllArgsConstructor;
+
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private User user;
+    private final User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return Collections.singletonList(
+        return List.of(
                 new SimpleGrantedAuthority(
-                        "ROLE_" + user.getRole()
+                        "ROLE_" + user.getRole().name()
                 )
         );
     }
