@@ -5,12 +5,13 @@ import com.demo.demo.dto.RegisterRequest;
 import com.demo.demo.entity.User;
 import com.demo.demo.repository.UserRepository;
 import com.demo.demo.security.JwtUtil;
-import com.demo.demo.enums.Role;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +49,7 @@ public class AuthController {
                 passwordEncoder.encode(request.getPassword())
         );
 
-        user.setRole(Role.EMPLOYEE);
+        user.setRole(request.getRole());
 
         userRepository.save(user);
 
