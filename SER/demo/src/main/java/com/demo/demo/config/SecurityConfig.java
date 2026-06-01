@@ -73,8 +73,14 @@ private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
                         jwtAuthFilter,
                         UsernamePasswordAuthenticationFilter.class
                 )
-                .exceptionHandling(ex ->
-        ex.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .exceptionHandling(ex -> ex
+    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+    .accessDeniedHandler((request, response, accessDeniedException) -> {
+        response.setStatus(403);
+        response.setContentType("application/json");
+        response.getWriter().write("{\"message\": \"Access Denied\"}");
+    })
+
 );
 
         return http.build();

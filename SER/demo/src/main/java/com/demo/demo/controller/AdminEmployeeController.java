@@ -1,7 +1,10 @@
+
 package com.demo.demo.controller;
 
 import com.demo.demo.entity.User;
 import com.demo.demo.repository.UserRepository;
+
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +27,7 @@ public class AdminEmployeeController {
     // CREATE EMPLOYEE
     @PostMapping
     public ResponseEntity<?> createEmployee(
-            @RequestBody User user) {
+           @Valid @RequestBody User user) {
 
         if (userRepository.existsByEmail(user.getEmail())) {
             return ResponseEntity.badRequest()

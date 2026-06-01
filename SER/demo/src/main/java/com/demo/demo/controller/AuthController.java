@@ -9,8 +9,10 @@ import com.demo.demo.security.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 
 import java.util.HashMap;
@@ -32,7 +34,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(
-            @RequestBody RegisterRequest request){
+          @Valid @RequestBody RegisterRequest request){
 
         if(userRepository.existsByEmail(request.getEmail())){
 
@@ -56,34 +58,33 @@ public class AuthController {
         return ResponseEntity.ok("User Registered");
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(
-            @RequestBody LoginRequest request){
+    // ✅ Fixed login method
+@PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody LoginRequest request) {
 
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() ->
-                        new RuntimeException("User Not Found"));
+    // Fix 1 — throw BadCredentialsException instead of RuntimeException
+    User user = userRepository.findByEmail(request.getEmail())
+            .orElseThrow(() ->
+                    new BadCredentialsException("Invalid credentials"));
 
-        boolean match = passwordEncoder.matches(
-                request.getPassword(),
-                user.getPassword()
-        );
+    boolean match = passwordEncoder.matches(
+            request.getPassword(),
+            user.getPassword()
+    );
 
-        if(!match){
-
-            return ResponseEntity.badRequest()
-                    .body("Invalid Password");
-        }
-
-        String token = jwtUtil.generateToken(user.getEmail());
-
-        Map<String, Object> response = new HashMap<>();
-
-        response.put("token", token);
-        response.put("name", user.getName());
-        response.put("role", user.getRole());
-        response.put("email", user.getEmail());
-
-        return ResponseEntity.ok(response);
+    // Fix 2 — throw BadCredentialsException instead of returning 400
+    if (!match) {
+        throw new BadCredentialsException("Invalid credentials");
     }
+
+    String token = jwtUtil.generateToken(user.getEmail());
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("token", token);
+    response.put("name", user.getName());
+    response.put("role", user.getRole());
+    response.put("email", user.getEmail());
+
+    return ResponseEntity.ok(response);
+}
 }

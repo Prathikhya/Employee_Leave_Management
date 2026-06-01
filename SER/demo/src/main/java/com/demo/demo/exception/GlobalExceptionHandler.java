@@ -2,6 +2,7 @@ package com.demo.demo.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -83,13 +84,23 @@ public class GlobalExceptionHandler {
     }
 
     // General Exception
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, String>> handleGeneralException(
-            Exception ex) {
 
-        Map<String, String> error = new HashMap<>();
-        error.put("message", ex.getMessage());
+  
+@ExceptionHandler(Exception.class)
+public ResponseEntity<Map<String, String>> handleGeneralException(
+        Exception ex) {
 
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    // Don't swallow Spring Security exceptions
+    if (ex instanceof AccessDeniedException)
+        throw (AccessDeniedException) ex;
+
+    if (ex instanceof org.springframework.security.core.AuthenticationException)
+        throw (org.springframework.security.core.AuthenticationException) ex;
+
+    Map<String, String> error = new HashMap<>();
+    error.put("message", "Internal server error");
+
+    return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+}
+    
 }
