@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
+import com.demo.demo.exception.ResourceNotFoundException;
+import com.demo.demo.exception.BadRequestException;
+import com.demo.demo.dto.EmployeeDTO;
 import java.util.List;
 
 @RestController
@@ -27,21 +29,27 @@ public class AdminEmployeeController {
     // CREATE EMPLOYEE
     @PostMapping
     public ResponseEntity<?> createEmployee(
-           @Valid @RequestBody User user) {
+           @Valid @RequestBody EmployeeDTO request) {
 
-        if (userRepository.existsByEmail(user.getEmail())) {
-            return ResponseEntity.badRequest()
-                    .body("Email already exists");
+        if (userRepository.existsByEmail(request.getEmail())) {
+           throw new BadRequestException("Email already exists");
         }
 
-        user.setPassword(
-                passwordEncoder.encode(user.getPassword())
-        );
+        User user = new User();
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setDepartment(request.getDepartment());
+        user.setDesignation(request.getDesignation());
+        user.setSalary(request.getSalary());
+        user.setRole(request.getRole());
+
 
         User savedUser = userRepository.save(user);
 
         return ResponseEntity.ok(savedUser);
     }
+    
 
     // GET ALL EMPLOYEES
     @GetMapping
@@ -59,32 +67,53 @@ public class AdminEmployeeController {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Employee Not Found"));
+                        new ResourceNotFoundException("Employee Not Found"));
 
         return ResponseEntity.ok(user);
     }
+// ✅ Fixed updateEmployee
+@PutMapping("/{id}")
+public ResponseEntity<?> updateEmployee(
+        @PathVariable Long id,
+        @RequestBody User updatedUser) {
 
-    // UPDATE EMPLOYEE
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateEmployee(
-            @PathVariable Long id,
-            @RequestBody User updatedUser) {
+    User user = userRepository.findById(id)
+            .orElseThrow(() ->
+                    new ResourceNotFoundException("Employee not found"));
 
-        User user = userRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Employee Not Found"));
-
+    // Only update fields that are sent (not null)
+    if (updatedUser.getName() != null)
         user.setName(updatedUser.getName());
+
+    if (updatedUser.getEmail() != null &&
+            !user.getEmail().equals(updatedUser.getEmail())) {
+
+        if (userRepository.existsByEmail(updatedUser.getEmail()))
+            throw new BadRequestException("Email already exists");
+
         user.setEmail(updatedUser.getEmail());
+    }
+
+    if (updatedUser.getDepartment() != null)
         user.setDepartment(updatedUser.getDepartment());
+
+    if (updatedUser.getDesignation() != null)
         user.setDesignation(updatedUser.getDesignation());
-        user.setSalary(updatedUser.getSalary());
+
+    if (updatedUser.getSalary() != null) {
+    if (updatedUser.getSalary() < 0) {
+        throw new BadRequestException("Salary cannot be negative");
+    }
+    user.setSalary(updatedUser.getSalary());
+}
+
+    if (updatedUser.getRole() != null)
         user.setRole(updatedUser.getRole());
 
-        userRepository.save(user);
+    userRepository.save(user);
 
-        return ResponseEntity.ok("Employee Updated Successfully");
-    }
+    return ResponseEntity.ok("Employee Updated Successfully");
+}
 
     // DELETE EMPLOYEE
     @DeleteMapping("/{id}")
@@ -93,7 +122,7 @@ public class AdminEmployeeController {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Employee Not Found"));
+                        new ResourceNotFoundException("Employee Not Found"));
 
         userRepository.delete(user);
 

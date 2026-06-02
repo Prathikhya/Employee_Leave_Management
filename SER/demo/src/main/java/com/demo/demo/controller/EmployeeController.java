@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.demo.demo.exception.ResourceNotFoundException;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -51,7 +52,7 @@ public class EmployeeController {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new RuntimeException("User Not Found"));
+                        new ResourceNotFoundException("User Not Found"));
 
         return ResponseEntity.ok(user);
     }
@@ -67,7 +68,7 @@ public class EmployeeController {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new RuntimeException("User Not Found"));
+                        new ResourceNotFoundException("User Not Found"));
 
         user.setName(updatedUser.getName());
 
@@ -104,7 +105,7 @@ public class EmployeeController {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new RuntimeException("User Not Found"));
+                        new ResourceNotFoundException("User Not Found"));
 
         List<LeaveRequest> leaves =
                 leaveRepository.findByEmployeeId(userId);
@@ -152,7 +153,7 @@ public class EmployeeController {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new RuntimeException("User Not Found"));
+                        new ResourceNotFoundException("User Not Found"));
 
         String oldPassword =
                 passwords.get("oldPassword");

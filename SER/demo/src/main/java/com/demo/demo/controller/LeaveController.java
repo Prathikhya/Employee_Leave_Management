@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
+import com.demo.demo.exception.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class LeaveController {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new RuntimeException("User Not Found"));
+                        new ResourceNotFoundException("User Not Found"));
 
         leaveRequest.setEmployee(user);
 

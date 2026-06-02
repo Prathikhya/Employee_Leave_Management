@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import com.demo.demo.exception.ResourceNotFoundException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +66,7 @@ public class ManagementController {
         LeaveRequest leave =
                 leaveRepository.findById(leaveId)
                         .orElseThrow(() ->
-                                new RuntimeException("Leave Not Found"));
+                                new ResourceNotFoundException("Leave Not Found"));
 
         leave.setStatus(LeaveStatus.APPROVED);
 
@@ -85,7 +86,7 @@ public class ManagementController {
         LeaveRequest leave =
                 leaveRepository.findById(leaveId)
                         .orElseThrow(() ->
-                                new RuntimeException("Leave Not Found"));
+                                new ResourceNotFoundException("Leave Not Found"));
 
         leave.setStatus(LeaveStatus.REJECTED);
 
