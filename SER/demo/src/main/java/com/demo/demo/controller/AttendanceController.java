@@ -54,3 +54,4 @@ public class AttendanceController {
                 attendanceService.getAllAttendance());
     }
 }
+

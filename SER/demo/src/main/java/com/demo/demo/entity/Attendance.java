@@ -30,3 +30,4 @@ public class Attendance {
     @JoinColumn(name = "employee_id")
     private User employee;
 }
+

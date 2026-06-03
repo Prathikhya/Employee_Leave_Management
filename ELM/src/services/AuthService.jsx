@@ -1,11 +1,5 @@
-import React from 'react'
+import api from "./api";
 
-const AuthService = () => {
-  return (
-    <div>
-      AuthService
-    </div>
-  )
-}
-
-export default AuthService
+export const login = (credentials) => {
+    return api.post("/auth/login", credentials);
+};

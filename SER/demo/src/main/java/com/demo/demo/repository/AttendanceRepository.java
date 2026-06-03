@@ -19,3 +19,4 @@ public interface AttendanceRepository
             LocalDate date
     );
 }
+
