@@ -13,7 +13,7 @@ function App() {
 
       <Navbar />
 
-      {/* Main Content */}
+    
       <main className="flex-grow-1">
         <AppRoutes />
       </main>
