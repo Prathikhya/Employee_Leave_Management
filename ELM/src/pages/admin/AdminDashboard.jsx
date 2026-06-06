@@ -1,40 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Sidebar from "../../components/Sidebar";
 
 
 const Dashboard = () => {
-
-  //  const menuItems = [
-  //   {
-  //     name: 'Dashboard',
-  //     path: '/admin/dashboard',
-  //   },
-  //   {
-  //     name: 'Employees List',
-  //     path: '/admin/employeeList',
-  //   },
-  //   {
-  //     name: 'Leave Requests',
-  //     path: '/admin/leaveRequests',
-  //   },
-  //   {
-  //     name: 'Attendance',
-  //     path: '/admin/attendence',
-  //   },
-  //   {
-  //     name: 'Calendar',
-  //     path: '/admin/calendarAdmin',
-  //   },
-  //   {
-  //     name: 'Salary',
-  //     path: '/admin/salaryEm',
-  //   },
-  //   {
-  //     name: 'Settings',
-  //     path: '/admin/setting',
-  //   },
-  // ];
 
   const stats = [
     {
@@ -89,53 +57,7 @@ const Dashboard = () => {
   return (
 
     
-        <div className="min-h-screen bg-slate-100 d-flex">
-
-
-        {/* Sidebar */}
-        <Sidebar />
-
-        {/* <div
-          className="bg-dark text-white p-4 d-flex flex-column"
-          style={{ width: '280px', minHeight: '100vh' }}
-        >
-          <div className="mb-5">
-            <h2 className="fw-bold">LMS Admin</h2>
-            <p className="text-secondary small">
-              Leave Management System
-            </p>
-          </div>
-
-          <div className="d-flex flex-column gap-3">
-            {[
-            'Dashboard',
-            'Employees',
-            'Leave Requests',
-            'Attendance',
-            'Calendar',
-            'Salary',
-            'Settings',
-          ].map((item) => (
-            <button
-              key={item}
-              className="btn btn-dark text-start border border-secondary rounded-4 py-3 px-3"
-            >
-              {item}
-            </button>
-          ))}
-          </div>
-
-               
-
-          <div className="mt-auto pt-5">
-            <button className="btn btn-danger w-100 rounded-4 py-3">
-              Logout
-            </button>
-          </div>
-        </div> */}
-
-
-
+        <div className="min-h-screen bg-slate-100">
         {/* Main Content */}
         <div className="flex-grow-1 p-4">
 
@@ -324,89 +246,12 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Employee Table */}
-            {/* <div className="bg-white rounded-4 shadow-sm p-4">
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                <h4 className="fw-bold">Leave Requests</h4>
-
-                <button className="btn btn-primary rounded-4 px-4">
-                  Add Employee
-                </button>
-              </div>
-
-              <div className="table-responsive">
-                <table className="table align-middle">
-                  <thead>
-                    <tr>
-                      <th>Employee</th>
-                      <th>Department</th>
-                      <th>Leave Type</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {employees.map((employee, index) => (
-                      <tr key={index}>
-                        <td>
-                          <div className="d-flex align-items-center gap-3">
-                            <img
-                              src={`https://i.pravatar.cc/50?img=${index + 10}`}
-                              alt="employee"
-                              className="rounded-circle"
-                            />
-
-                            <div>
-                              <h6 className="mb-0 fw-semibold">
-                                {employee.name}
-                              </h6>
-                              <small className="text-muted">
-                                employee@company.com
-                              </small>
-                            </div>
-                          </div>
-                        </td>
-                        <td>{employee.department}</td>
-                        <td>{employee.leave}</td>
-
-                        <td>
-                          <span
-                            className={`badge rounded-pill px-3 py-2 ${employee.status === 'Approved'
-                                ? 'bg-success'
-                                : employee.status === 'Rejected'
-                                  ? 'bg-danger'
-                                  : 'bg-warning text-dark'
-                              }`}
-                          >
-                            {employee.status}
-                          </span>
-                        </td>
-
-                        <td>
-                          <div className="d-flex gap-2">
-                            <button className="btn btn-success btn-sm rounded-3">
-                              Approve
-                            </button>
-
-                            <button className="btn btn-danger btn-sm rounded-3">
-                              Reject
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div> */}
+            
           </div>
         </div>
       </div>
 
-      
-
-
+    
         );
 };
 

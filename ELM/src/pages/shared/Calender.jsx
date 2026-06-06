@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CalendarAdmin = () => {
+const Calendar = () => {
   const events = [
     {
       date: '12',
@@ -166,4 +166,4 @@ const CalendarAdmin = () => {
   );
 };
 
-export default CalendarAdmin;
+export default Calendar;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Reports = () => {
+const AdminReports = () => {
   const reports = [
     {
       title: 'Employee Reports',
@@ -314,4 +314,4 @@ const Reports = () => {
   );
 };
 
-export default Reports;
+export default AdminReports;

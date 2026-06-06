@@ -20,87 +20,11 @@ const stats = [
     },
   ];
   
-  const UserDashboard = () => {
+  const EmployeeDashboard = () => {
     return (
 
     <div className="d-flex bg-light" style={{ minHeight: '100vh' }}>
-      {/* Sidebar */}
-      <div
-        className="bg-dark text-white p-4 d-flex flex-column"
-        style={{ width: '270px' }}
-      >
-        <div className="mb-5">
-          <h2 className="fw-bold">Employee Panel</h2>
-          <p className="text-secondary">
-            Leave Management System
-          </p>
-        </div>
-
-        <div className="d-flex flex-column gap-3">
-          <Link
-            to="/dashboard"
-            className="btn btn-dark border border-secondary rounded-4 text-start py-3"
-          >
-            Dashboard
-          </Link>
-
-          <Link
-            to="/dashboard"
-            className="btn btn-dark border border-secondary rounded-4 text-start py-3"
-          >
-            Attendance
-          </Link>
-
-
-<Link
-            to="/dashboard"
-            className="btn btn-dark border border-secondary rounded-4 text-start py-3"
-          >
-            Leaves
-          </Link>
-
-
-          <Link
-            to="/calendar"
-            className="btn btn-dark border border-secondary rounded-4 text-start py-3"
-          >
-            Calendar
-          </Link>
-
-          <Link
-            to="/salary"
-            className="btn btn-dark border border-secondary rounded-4 text-start py-3"
-          >
-            Salary
-          </Link>
-
-          <div className="dropdown">
-            <button
-              className="btn btn-dark border border-secondary rounded-4 text-start py-3 w-100 "
-              data-bs-toggle="dropdown"
-            >
-              Settings
-            </button>
-
-            <ul className="dropdown-menu w-100 rounded-4 border-0 shadow">
-              <li>
-                <Link
-                  to="/edit-profile"
-                  className="dropdown-item py-3"
-                >
-                  Edit Profile
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-auto pt-5">
-          <button className="btn btn-danger w-100 rounded-4 py-3">
-            Logout
-          </button>
-        </div>
-      </div>
+    
 
       {/* Main Content */}
       <div className="flex-grow-1 p-4">
@@ -265,4 +189,4 @@ const stats = [
   );
 }
 
-export default UserDashboard
+export default EmployeeDashboard;

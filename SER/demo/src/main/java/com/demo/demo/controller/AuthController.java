@@ -32,6 +32,8 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    
+
     @PostMapping("/register")
     public ResponseEntity<?> register(
           @Valid @RequestBody RegisterRequest request){
@@ -77,6 +79,8 @@ public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         throw new BadCredentialsException("Invalid credentials");
     }
 
+    
+
     String token = jwtUtil.generateToken(user.getEmail());
 
     Map<String, Object> response = new HashMap<>();
@@ -86,5 +90,9 @@ public ResponseEntity<?> login(@RequestBody LoginRequest request) {
     response.put("email", user.getEmail());
 
     return ResponseEntity.ok(response);
+}
+@GetMapping("/test")
+public String test() {
+    return "Backend Running";
 }
 }

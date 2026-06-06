@@ -82,6 +82,9 @@ private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
         response.getWriter().write("{\"message\": \"Access Denied\"}");
     })
 
+
+    
+
 );
 
         return http.build();

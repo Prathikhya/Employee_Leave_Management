@@ -14,7 +14,7 @@ const requests = [
   },
 ];
 
-const Leaves = () => {
+const ManagerLeaves = () => {
   return (
     <div>
 
@@ -59,4 +59,4 @@ const Leaves = () => {
   );
 };
 
-export default Leaves;
+export default ManagerLeaves;

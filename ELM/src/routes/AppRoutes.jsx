@@ -1,10 +1,10 @@
-import React from 'react'
+
 import { Routes, Route, Navigate } from "react-router-dom";
  
 // common pages
-import Home from '../pages/common/home'
-import About from '../pages/common/about'
-import Contact from '../pages/common/contact'
+import Home from '../pages/home/Home'
+import About from '../pages/home/About'
+import Contact from '../pages/home/Contact'
 
 // Authenticated pages
 import Login from '../pages/auth/login'
@@ -12,28 +12,46 @@ import Register from '../pages/auth/register'
 
 
 // Admin pages
-import Dashboard from '../pages/admin/dashboard'
-import EmployeeList from '../pages/admin/employeeList'
-import LeaveRequests from '../pages/admin/leaverequests'
-import CalenderAdmin from '../pages/admin/CalenderAdmin'
-import SalaryEm from '../pages/admin/SalaryEm'
-import Setting from '../pages/admin/Setting'
-import Attendence from '../pages/admin/Attendence'
-import Reports from '../pages/admin/Reports'
+import AdminDashboard from '../pages/admin/AdminDashboard'
+import AdminReports from '../pages/admin/AdminReports'
+import EmployeeList from '../pages/admin/EmployeeList'
+import EmployeeSalary from '../pages/admin/EmployeesSalary'
 
 
 // Employee pages
-import UserDashboard from '../pages/employee/UserDashboard'
-import UserAttendance from '../pages/employee/UserAttendance'
-import UserLeaves from '../pages/employee/UserLeaves'
-import UserSalary from '../pages/employee/UserSalary'
-import UserCalendar from '../pages/employee/UserCalendar'
-import UserSettings from '../pages/employee/UserSettings'
+import EmployeeDashboard from '../pages/employee/EmployeeDashboard'
+import EmployeeLeaves from '../pages/employee/EmployeeLeaves'
+import Mysalary from '../pages/employee/MySalary'
 
+
+
+//Manager pages
+import ManagerDashboard from '../pages/manager/ManagerDashboard'
+import ManagerLeaves from '../pages/manager/ManagerLeaves'
+import ManagerSalary from '../pages/manager/ManagerSalary'
+
+
+// Shared pages
+import Calender from '../pages/shared/Calender'
+import Setting from '../pages/shared/Setting'
+import LeaveRequests from '../pages/shared/LeaveRequests'
 
 // Authority pages
-import Leaves from '../pages/authorities/Leaves'
+import Leaves from '../pages/manager/ManagerLeaves'
 
+// Layouts
+import PublicLayout from '../layouts/PublicLayout'
+import DashboardLayout from '../layouts/DashboardLayout'
+
+// Protected Route Component
+import AdminRoute from "./AdminRoute";
+import ManagerRoute from "./ManagerRoute";
+
+
+const ProtectedRoute = ({ children }) => {
+  const isLoggedIn = localStorage.getItem('token') // change as needed
+  return isLoggedIn ? children : <Navigate to="/login" replace />
+}
 
 
 const AppRoutes = () => {
@@ -41,37 +59,46 @@ const AppRoutes = () => {
 
    <Routes>
 
-      {/* Common */}
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/contact" element={<Contact />} />
-
-      {/* Auth */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-
-      {/* Admin */}
-      <Route path="/admin/dashboard" element={<Dashboard />} />
-      <Route path="/admin/employees" element={<EmployeeList />} />
-      <Route path="/admin/leaverequests" element={<LeaveRequests />} />
-      <Route path="/admin/calender" element={<CalenderAdmin />} />
-      <Route path="/admin/salary" element={<SalaryEm />} />
-      <Route path="/admin/setting" element={<Setting />} />
-      <Route path="/admin/attendence" element={<Attendence />} />
-      <Route path="/admin/reports" element={<Reports />} />
+    <Route element={<PublicLayout />}>
+       {/* Public routes */}
+       <Route path="/" element={<Home />} />
+       <Route path="/about" element={<About />} />
+       <Route path="/contact" element={<Contact />} />
+       <Route path="/login" element={<Login />} />
+       <Route path="/register" element={<Register />} />
+    </Route>
 
 
+    {/* Dashboard pages () */}
+    <Route
+      element={
+        <ProtectedRoute>
+          <DashboardLayout />
+        </ProtectedRoute>
+      }
 
-      {/* Employee */}
-      <Route path="/employee/dashboard" element={<UserDashboard />} />
-      <Route path="/employee/applyleave" element={<UserLeaves />} />
-      <Route path="/employee/attendance" element={<UserAttendance />} />
-      <Route path="/employee/salary" element={<UserSalary />} />
-      <Route path="/employee/calendar" element={<UserCalendar />} />
-      <Route path="/employee/settings" element={<UserSettings />} />
+    >
+      {/* Admin routes */}
+    <Route  path="/admin/admindashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>}
+/>
+      <Route path="/admin/adminreports" element={<AdminRoute><AdminReports /></AdminRoute>} />
+      <Route path="/admin/employeelist" element={<AdminRoute><EmployeeList /></AdminRoute>} />
+      <Route path="/admin/employeesalary" element={<AdminRoute><EmployeeSalary /></AdminRoute>} />
 
-      {/* Authority */}
-      <Route path="/authority/leaves" element={<Leaves />} />
+
+      {/* Employee routes */}
+      <Route path="/employee/employeedashboard" element={<EmployeeDashboard />} />
+      <Route path="/employee/employeaves" element={<EmployeeLeaves />} />
+      <Route path="/employee/mysalary" element={<Mysalary />} />
+      
+      
+
+      {/* Authority routes */}
+      <Route path="/manager/managerdashboard" element={<ManagerRoute><ManagerDashboard /></ManagerRoute>} />
+      <Route path="/manager/managerleaves" element={<ManagerRoute><ManagerLeaves /></ManagerRoute>} />
+      <Route path="/manager/managersalary" element={<ManagerRoute><ManagerSalary /></ManagerRoute>} />
+
+    </Route>
 
       {/* Default Route */}
       <Route path="*" element={<Navigate to="/" />} />

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SalaryEm = () => {
+const EmployeesSalary = () => {
   const salaryHistory = [
     {
       month: 'January 2026',
@@ -312,4 +312,4 @@ const SalaryEm = () => {
   );
 };
 
-export default SalaryEm;
+export default EmployeesSalary;
