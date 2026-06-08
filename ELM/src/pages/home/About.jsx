@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const about = () => {
+const About = () => {
   return (
     <div style={{ fontFamily: "'Segoe UI', sans-serif" }}>
 
@@ -168,4 +168,4 @@ const about = () => {
   )
 }
 
-export default about
+export default About

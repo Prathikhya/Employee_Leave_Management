@@ -16,59 +16,45 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        'http://localhost:8080/auth/login',
-        { email, password }
-      );
+      const response = await axios.post('http://localhost:8080/auth/login', {
+        email,
+        password,
+      });
 
-      // Save token and user info
+      console.log('LOGIN RESPONSE:', response.data); // ← inside here now
+
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('role', response.data.role);
       localStorage.setItem('name', response.data.name);
       localStorage.setItem('email', response.data.email);
 
-      // Redirect based on role
       const role = response.data.role;
+      console.log('ROLE IS:', role); // ← check role value
 
-      if (role === 'ADMIN') navigate('/admin/dashboard');
-      else if (role === 'MANAGER') navigate('/manager/dashboard');
-      else navigate('/employee/dashboard');
+      if (role === 'ADMIN') navigate('/admin/admindashboard');
+      else if (role === 'MANAGER') navigate('/manager/managerdashboard');
+      else navigate('/employee/employeedashboard');
 
     } catch (err) {
-      setError(
-        err.response?.data?.message || 'Invalid email or password'
-      );
+      console.log('FULL ERROR:', err);
+      console.log('ERROR MESSAGE:', err.message);
+      setError(err.response?.data?.message || 'Invalid email or password');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: "100vh" }}
-    >
-      <div
-        className="card shadow-lg border-0 p-4"
-        style={{
-          width: "100%",
-          maxWidth: "400px",
-          borderRadius: "20px",
-        }}
-      >
-        <h2 className="text-center fw-bold text-primary mb-4">
-          Login
-        </h2>
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+      <div className="card shadow-lg border-0 p-4" style={{ width: '100%', maxWidth: '400px', borderRadius: '20px' }}>
 
-        {/* Error Message */}
+        <h2 className="text-center fw-bold text-primary mb-4">Login</h2>
+
         {error && (
-          <div className="alert alert-danger rounded-pill text-center py-2">
-            {error}
-          </div>
+          <div className="alert alert-danger rounded-pill text-center py-2">{error}</div>
         )}
 
         <form onSubmit={handleLogin}>
-          {/* Email */}
           <div className="mb-3">
             <label className="form-label fw-semibold">Email</label>
             <input
@@ -79,14 +65,8 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <div className="text-end mt-2">
-              <Link to="/forgot-email" className="text-decoration-none">
-                Forgot Email?
-              </Link>
-            </div>
           </div>
 
-          {/* Password */}
           <div className="mb-3">
             <label className="form-label fw-semibold">Password</label>
             <input
@@ -98,35 +78,22 @@ const Login = () => {
               required
             />
             <div className="text-end mt-2">
-              <Link to="/forgot-password" className="text-decoration-none">
+              <Link to="/forgot-password" className="text-decoration-none" style={{ fontSize: '13px' }}>
                 Forgot Password?
               </Link>
             </div>
           </div>
 
-          {/* Button */}
           <div className="d-grid mt-4">
-            <button
-              type="submit"
-              className="btn btn-primary rounded-pill py-2 fw-bold"
-              disabled={loading}
-            >
+            <button type="submit" className="btn btn-primary rounded-pill py-2 fw-bold" disabled={loading}>
               {loading ? 'Logging in...' : 'Login'}
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline-primary rounded-pill py-2 fw-bold mt-3"
-            >
-              Sign in with Google
             </button>
           </div>
         </form>
 
-        <p className="text-center mt-3">
-          Don't have an account?{" "}
-          <Link to="/register" className="fw-bold text-decoration-none">
-            Register
-          </Link>
+        <p className="text-center mt-3" style={{ fontSize: '14px' }}>
+          Don't have an account?{' '}
+          <Link to="/register" className="fw-bold text-decoration-none">Register</Link>
         </p>
       </div>
     </div>

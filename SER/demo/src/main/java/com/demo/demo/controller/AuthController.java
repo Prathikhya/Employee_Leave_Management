@@ -13,6 +13,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import com.demo.demo.dto.ForgotPassword;
+import com.demo.demo.service.AdminService;
 
 
 import java.util.HashMap;
@@ -32,7 +34,8 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    
+    @Autowired
+    private AdminService adminService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(
@@ -86,13 +89,27 @@ public ResponseEntity<?> login(@RequestBody LoginRequest request) {
     Map<String, Object> response = new HashMap<>();
     response.put("token", token);
     response.put("name", user.getName());
-    response.put("role", user.getRole());
+    response.put("role", user.getRole().name());
     response.put("email", user.getEmail());
 
     return ResponseEntity.ok(response);
 }
-@GetMapping("/test")
-public String test() {
-    return "Backend Running";
+
+
+
+@PostMapping("/forgot-password")
+public ResponseEntity<?> forgotPassword(
+        @RequestBody ForgotPassword request) {
+
+    // ← add this check
+    if (!userRepository.existsByEmail(request.getEmail())) {
+        return ResponseEntity.status(404)
+                .body(Map.of("message", "No account found with this email address."));
+    }
+
+    adminService.forgotPassword(request.getEmail());
+
+    return ResponseEntity.ok("Reset link sent to email");
 }
+
 }

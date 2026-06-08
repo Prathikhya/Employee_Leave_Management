@@ -4,7 +4,6 @@ const PrivateRouter = () => {
   return (
     <div>
       PrivateRouter
-PrivateRouter
     </div>
   )
 }

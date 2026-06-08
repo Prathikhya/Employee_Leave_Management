@@ -1,6 +1,6 @@
 
 import { Routes, Route, Navigate } from "react-router-dom";
- 
+
 // common pages
 import Home from '../pages/home/Home'
 import About from '../pages/home/About'
@@ -9,6 +9,8 @@ import Contact from '../pages/home/Contact'
 // Authenticated pages
 import Login from '../pages/auth/login'
 import Register from '../pages/auth/register'
+import ForgotPassword from '../pages/auth/ForgotPassword'
+import ResetPassword from '../pages/auth/ResetPassword'
 
 
 // Admin pages
@@ -32,7 +34,7 @@ import ManagerSalary from '../pages/manager/ManagerSalary'
 
 
 // Shared pages
-import Calender from '../pages/shared/Calender'
+import Calendar from '../pages/shared/Calendar'
 import Setting from '../pages/shared/Setting'
 import LeaveRequests from '../pages/shared/LeaveRequests'
 
@@ -57,54 +59,70 @@ const ProtectedRoute = ({ children }) => {
 const AppRoutes = () => {
   return (
 
-   <Routes>
+    <Routes>
 
-    <Route element={<PublicLayout />}>
-       {/* Public routes */}
-       <Route path="/" element={<Home />} />
-       <Route path="/about" element={<About />} />
-       <Route path="/contact" element={<Contact />} />
-       <Route path="/login" element={<Login />} />
-       <Route path="/register" element={<Register />} />
-    </Route>
-
-
-    {/* Dashboard pages () */}
-    <Route
-      element={
-        <ProtectedRoute>
-          <DashboardLayout />
-        </ProtectedRoute>
-      }
-
-    >
-      {/* Admin routes */}
-    <Route  path="/admin/admindashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>}
-/>
-      <Route path="/admin/adminreports" element={<AdminRoute><AdminReports /></AdminRoute>} />
-      <Route path="/admin/employeelist" element={<AdminRoute><EmployeeList /></AdminRoute>} />
-      <Route path="/admin/employeesalary" element={<AdminRoute><EmployeeSalary /></AdminRoute>} />
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+      </Route>
 
 
-      {/* Employee routes */}
-      <Route path="/employee/employeedashboard" element={<EmployeeDashboard />} />
-      <Route path="/employee/employeaves" element={<EmployeeLeaves />} />
-      <Route path="/employee/mysalary" element={<Mysalary />} />
-      
-      
+      {/* Dashboard pages () */}
+      <Route
+        element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
 
-      {/* Authority routes */}
-      <Route path="/manager/managerdashboard" element={<ManagerRoute><ManagerDashboard /></ManagerRoute>} />
-      <Route path="/manager/managerleaves" element={<ManagerRoute><ManagerLeaves /></ManagerRoute>} />
-      <Route path="/manager/managersalary" element={<ManagerRoute><ManagerSalary /></ManagerRoute>} />
+      >
+        {/* Admin routes */}
+        <Route path="/admin/admindashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+        <Route path="/admin/adminreports" element={<AdminRoute><AdminReports /></AdminRoute>} />
+        <Route path="/admin/employeelist" element={<AdminRoute><EmployeeList /></AdminRoute>} />
+        <Route path="/admin/employeesalary" element={<AdminRoute><EmployeeSalary /></AdminRoute>} />
 
-    </Route>
+
+        {/* Employee routes */}
+        <Route path="/employee/employeedashboard" element={<EmployeeDashboard />} />
+        <Route path="/employee/employeaves" element={<EmployeeLeaves />} />
+        <Route path="/employee/mysalary" element={<Mysalary />} />
+
+
+
+        {/* Authority routes */}
+        <Route path="/manager/managerdashboard" element={<ManagerRoute><ManagerDashboard /></ManagerRoute>} />
+        <Route path="/manager/managerleaves" element={<ManagerRoute><ManagerLeaves /></ManagerRoute>} />
+        <Route path="/manager/managersalary" element={<ManagerRoute><ManagerSalary /></ManagerRoute>} />
+
+
+
+
+        {/* Shared routes */}
+        <Route path="/shared/calendar" element={<Calendar />} />
+        <Route path="/shared/setting" element={<Setting />} />
+        <Route path="/shared/leaverequests" element={<LeaveRequests />} />
+
+      </Route>
+
+      {/* login forget reset */}
+      <Route path="auth/forgot-password" element={<ForgotPassword />} />
+      <Route
+        path="auth/reset-password"
+        element={<ResetPassword />}
+      />
+
 
       {/* Default Route */}
       <Route path="*" element={<Navigate to="/" />} />
 
     </Routes>
-    
+
   );
 }
 

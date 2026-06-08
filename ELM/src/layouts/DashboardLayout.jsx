@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 
 const navItems = [
-  { icon: '⊞', label: 'Dashboard',     path: '/admin/dashboard' },
+  { icon: '⊞', label: 'Dashboard',     path: '/admin/admindashboard' },
   { icon: '👥', label: 'Employee List', path: '/admin/employees' },
-  { icon: '📋', label: 'Leave Requests',path: '/admin/leaves' },
-  { icon: '📅', label: 'Calendar',      path: '/admin/calendar' },
+  { icon: '📋', label: 'Leave Requests',path: '/shared/leaverequests' },
+  { icon: '📅', label: 'Calendar',      path: '/shared/calendar' },
   { icon: '💰', label: 'Salary',        path: '/admin/salary' },
-  { icon: '👆', label: 'Attendance',    path: '/admin/attendance' },
+  { icon: '👆', label: 'Attendance',    path: '/shared/attendance' },
   { icon: '📊', label: 'Reports',       path: '/admin/reports' },
-  { icon: '⚙️', label: 'Settings',      path: '/admin/settings' },
+  { icon: '⚙️', label: 'Settings',      path: '/shared/setting' },
 ]
 
 const DashboardLayout = () => {

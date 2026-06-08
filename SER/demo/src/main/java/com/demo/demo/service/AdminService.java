@@ -6,7 +6,9 @@ import com.demo.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.UUID;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,6 +19,12 @@ public class AdminService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+
+    @Autowired
+    private EmailService emailService;
+
+
 
     // CREATE EMPLOYEE
     public User createEmployee(User user) {
@@ -72,5 +80,64 @@ public class AdminService {
 
         userRepository.delete(user);
     }
+
+
+    // FORGOT PASSWORD
+    public void forgotPassword(String email) {
+
+    User user =
+            userRepository.findByEmail(email)
+            .orElseThrow(() ->
+                new RuntimeException("Email not found"));
+
+    String token =
+            UUID.randomUUID().toString();
+
+    user.setResetToken(token);
+
+    user.setTokenExpiry(
+            LocalDateTime.now().plusMinutes(30)
+    );
+
+    userRepository.save(user);
+
+    String link =
+            "http://localhost:5173/reset-password?token="
+                    + token;
+
+    emailService.sendResetMail(
+            user.getEmail(),
+            link
+    );
+}
+
+// RESET PASSWORD
+public void resetPassword(
+        String token,
+        String newPassword) {
+
+    User user =
+            userRepository.findByResetToken(token)
+            .orElseThrow(() ->
+                    new RuntimeException("Invalid Token"));
+
+    if(user.getTokenExpiry()
+            .isBefore(LocalDateTime.now())) {
+
+        throw new RuntimeException(
+                "Token Expired");
+    }
+
+    user.setPassword(
+            passwordEncoder.encode(newPassword)
+    );
+
+    user.setResetToken(null);
+    user.setTokenExpiry(null);
+
+    userRepository.save(user);
+}
+
+
 }
 

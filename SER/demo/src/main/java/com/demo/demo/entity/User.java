@@ -2,6 +2,7 @@ package com.demo.demo.entity;
 
 import com.demo.demo.enums.Role;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
@@ -32,4 +33,10 @@ public class User {
     private String department;
     private Double monthlySalary;
     private LocalDate joiningDate;
+
+    @Column(name = "reset_token")
+private String resetToken;
+
+@Column(name = "token_expiry")
+private LocalDateTime tokenExpiry;
 }
