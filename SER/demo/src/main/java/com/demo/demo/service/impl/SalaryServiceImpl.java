@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import lombok.NonNull;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class SalaryServiceImpl
     private final UserRepository userRepository;
 
     @Override
-    public Salary generateSalary(
+    public Salary generateSalary( @NonNull
             Long employeeId,
             SalaryDTO dto) {
 
@@ -49,11 +50,11 @@ public class SalaryServiceImpl
                 .employee(employee)
                 .build();
 
-        return Objects.requireNonNull(salaryRepository.save(salary));
+        return (salaryRepository.save(salary));
     }
 
     @Override
-    public List<Salary> getEmployeeSalary(Long employeeId) {
+    public List<Salary> getEmployeeSalary( @NonNull Long employeeId) {
 
         User employee = userRepository.findById(Objects.requireNonNull(employeeId, "Employee id must not be null"))
                 .orElseThrow(() ->
@@ -70,7 +71,7 @@ public class SalaryServiceImpl
     }
 
     @Override
-    public Salary updateSalary(
+    public Salary updateSalary( @NonNull
             Long salaryId,
             SalaryDTO dto) {
 
@@ -93,7 +94,7 @@ public class SalaryServiceImpl
     }
 
     @Override
-    public void deleteSalary(Long salaryId) {
+    public void deleteSalary( @NonNull Long salaryId) {
 
         Salary salary = salaryRepository.findById(salaryId)
                 .orElseThrow(() ->
