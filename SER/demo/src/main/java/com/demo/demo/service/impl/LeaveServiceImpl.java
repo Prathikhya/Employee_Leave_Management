@@ -9,12 +9,14 @@ import com.demo.demo.repository.LeaveRepository;
 import com.demo.demo.repository.UserRepository;
 import com.demo.demo.service.LeaveService;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
-
+import java.util.Objects;
 import java.util.List;
 
+@SuppressWarnings("null")
 @Service
 @RequiredArgsConstructor
 public class LeaveServiceImpl implements LeaveService {
@@ -23,7 +25,7 @@ public class LeaveServiceImpl implements LeaveService {
     private final UserRepository userRepository;
 
     @Override
-    public LeaveRequest applyLeave(
+    public LeaveRequest applyLeave( @NonNull
             Long employeeId,
             LeaveRequestDTO dto) {
 
@@ -41,11 +43,14 @@ public class LeaveServiceImpl implements LeaveService {
                 .employee(employee)
                 .build();
 
-        return leaveRepository.save(leaveRequest);
+        return Objects.requireNonNull(
+                leaveRepository.save(leaveRequest),
+                "Failed to save leave request"
+        );
     }
 
     @Override
-    public List<LeaveRequest> getEmployeeLeaves(Long employeeId) {
+    public List<LeaveRequest> getEmployeeLeaves(@NonNull Long employeeId) {
 
         User employee = userRepository.findById(employeeId)
                 .orElseThrow(() ->
@@ -62,7 +67,7 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    public LeaveRequest approveLeave(Long leaveId) {
+    public LeaveRequest approveLeave(@NonNull Long leaveId) {
 
         LeaveRequest leave = leaveRepository.findById(leaveId)
                 .orElseThrow(() ->
@@ -75,7 +80,7 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    public LeaveRequest rejectLeave(Long leaveId) {
+    public LeaveRequest rejectLeave(@NonNull Long leaveId) {
 
         LeaveRequest leave = leaveRepository.findById(leaveId)
                 .orElseThrow(() ->

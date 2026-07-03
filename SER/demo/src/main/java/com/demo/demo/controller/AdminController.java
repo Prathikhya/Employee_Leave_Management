@@ -49,7 +49,7 @@ public class AdminController {
 
     @PutMapping("/approve/{leaveId}")
     public LeaveRequest approveLeave(
-            @PathVariable Long leaveId){
+            @PathVariable long leaveId){
 
         LeaveRequest leave =
                 leaveRepository.findById(leaveId)
@@ -65,7 +65,7 @@ public class AdminController {
 
     @PutMapping("/reject/{leaveId}")
     public LeaveRequest rejectLeave(
-            @PathVariable Long leaveId){
+            @PathVariable long leaveId){
 
         LeaveRequest leave =
                 leaveRepository.findById(leaveId)
@@ -81,7 +81,7 @@ public class AdminController {
 
     @DeleteMapping("/delete-user/{userId}")
     public String deleteUser(
-            @PathVariable Long userId){
+            @PathVariable long userId){
 
         userRepository.deleteById(userId);
 

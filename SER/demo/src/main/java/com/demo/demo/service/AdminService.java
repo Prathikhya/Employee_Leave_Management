@@ -3,6 +3,8 @@ package com.demo.demo.service;
 import com.demo.demo.entity.User;
 import com.demo.demo.repository.UserRepository;
 
+import lombok.NonNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import java.util.UUID;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AdminService {
@@ -27,7 +30,7 @@ public class AdminService {
 
 
     // CREATE EMPLOYEE
-    public User createEmployee(User user) {
+    public User createEmployee(  User user) {
 
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new RuntimeException("Email already exists");
@@ -49,17 +52,19 @@ public class AdminService {
     // GET EMPLOYEE BY ID
     public User getEmployeeById(Long id) {
 
-        return userRepository.findById(id)
+        return userRepository.findById(Objects.requireNonNull(id))
                 .orElseThrow(() ->
                         new RuntimeException("Employee Not Found"));
     }
 
     // UPDATE EMPLOYEE
-    public User updateEmployee(Long id, User updatedUser) {
+    public User updateEmployee( @NonNull Long id, User updatedUser) {
 
-        User user = userRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Employee Not Found"));
+        User user = Objects.requireNonNull(
+                userRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException("Employee Not Found"))
+        );
 
         user.setName(updatedUser.getName());
         user.setEmail(updatedUser.getEmail());
@@ -72,13 +77,13 @@ public class AdminService {
     }
 
     // DELETE EMPLOYEE
-    public void deleteEmployee(Long id) {
+    public void deleteEmployee( @NonNull Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Employee Not Found"));
+                        .orElseThrow(() ->
+                                new RuntimeException("Employee Not Found"));
 
-        userRepository.delete(user);
+        userRepository.delete(Objects.requireNonNull(user));
     }
 
 

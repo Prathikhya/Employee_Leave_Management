@@ -32,7 +32,7 @@ public class LeaveController {
 
     @PostMapping("/apply/{userId}")
     public ResponseEntity<?> applyLeave(
-            @PathVariable Long userId,
+            @PathVariable long userId,
             @RequestBody LeaveRequest leaveRequest){
 
         User user = userRepository.findById(userId)
@@ -66,7 +66,7 @@ public class LeaveController {
 
     @DeleteMapping("/cancel/{leaveId}")
     public ResponseEntity<?> cancelLeave(
-            @PathVariable Long leaveId){
+            @PathVariable long leaveId){
 
         leaveRepository.deleteById(leaveId);
 

@@ -6,6 +6,8 @@ import com.demo.demo.entity.User;
 import com.demo.demo.repository.LeaveRepository;
 import com.demo.demo.repository.UserRepository;
 
+import lombok.NonNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("/employee")
@@ -48,7 +51,7 @@ public class EmployeeController {
 
     @GetMapping("/profile/{userId}")
     public ResponseEntity<?> getProfile(
-            @PathVariable Long userId){
+            @PathVariable @NonNull Long userId){
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
@@ -63,7 +66,7 @@ public class EmployeeController {
 
     @PutMapping("/update/{userId}")
     public ResponseEntity<?> updateProfile(
-            @PathVariable Long userId,
+            @PathVariable @NonNull Long userId,
             @RequestBody User updatedUser){
 
         User user = userRepository.findById(userId)
@@ -87,7 +90,7 @@ public class EmployeeController {
 
     @GetMapping("/leaves/{userId}")
     public ResponseEntity<?> getEmployeeLeaves(
-            @PathVariable Long userId){
+            @PathVariable @NonNull Long userId){
 
         List<LeaveRequest> leaves =
                 leaveRepository.findByEmployeeId(userId);
@@ -101,7 +104,7 @@ public class EmployeeController {
 
     @GetMapping("/dashboard/{userId}")
     public ResponseEntity<?> employeeDashboard(
-            @PathVariable Long userId){
+            @PathVariable @NonNull Long userId){
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
@@ -148,7 +151,7 @@ public class EmployeeController {
 
     @PutMapping("/change-password/{userId}")
     public ResponseEntity<?> changePassword(
-            @PathVariable Long userId,
+            @PathVariable @NonNull Long userId,
             @RequestBody Map<String, String> passwords){
 
         User user = userRepository.findById(userId)

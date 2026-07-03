@@ -23,8 +23,8 @@ public class ApplicationConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = 
-            new DaoAuthenticationProvider(customUserDetailServices);
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(); // ← no argument
+        authProvider.setUserDetailsService(customUserDetailServices); // ← set separately
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
@@ -36,8 +36,7 @@ public class ApplicationConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config
-    ) throws Exception {
+            AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 }

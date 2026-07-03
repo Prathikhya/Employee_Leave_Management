@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class SalaryServiceImpl
             Long employeeId,
             SalaryDTO dto) {
 
-        User employee = userRepository.findById(employeeId)
+        User employee = userRepository.findById(Objects.requireNonNull(employeeId, "Employee id must not be null"))
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Employee not found"));
@@ -48,13 +49,13 @@ public class SalaryServiceImpl
                 .employee(employee)
                 .build();
 
-        return salaryRepository.save(salary);
+        return Objects.requireNonNull(salaryRepository.save(salary));
     }
 
     @Override
     public List<Salary> getEmployeeSalary(Long employeeId) {
 
-        User employee = userRepository.findById(employeeId)
+        User employee = userRepository.findById(Objects.requireNonNull(employeeId, "Employee id must not be null"))
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Employee not found"));

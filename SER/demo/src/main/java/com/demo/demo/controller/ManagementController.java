@@ -61,7 +61,7 @@ public class ManagementController {
 
     @PutMapping("/approve/{leaveId}")
     public ResponseEntity<?> approveLeave(
-            @PathVariable Long leaveId){
+            @PathVariable long leaveId){
 
         LeaveRequest leave =
                 leaveRepository.findById(leaveId)
@@ -81,7 +81,7 @@ public class ManagementController {
 
     @PutMapping("/reject/{leaveId}")
     public ResponseEntity<?> rejectLeave(
-            @PathVariable Long leaveId){
+            @PathVariable long leaveId){
 
         LeaveRequest leave =
                 leaveRepository.findById(leaveId)

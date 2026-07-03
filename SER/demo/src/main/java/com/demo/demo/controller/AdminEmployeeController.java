@@ -1,4 +1,3 @@
-
 package com.demo.demo.controller;
 
 import com.demo.demo.entity.User;
@@ -14,6 +13,7 @@ import com.demo.demo.exception.ResourceNotFoundException;
 import com.demo.demo.exception.BadRequestException;
 import com.demo.demo.dto.EmployeeDTO;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/admin/employees")
@@ -38,7 +38,7 @@ public class AdminEmployeeController {
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode( user.getPassword()));
         user.setDepartment(request.getDepartment());
         user.setDesignation(request.getDesignation());
         user.setSalary(request.getSalary());
@@ -63,7 +63,7 @@ public class AdminEmployeeController {
     // GET EMPLOYEE BY ID
     @GetMapping("/{id}")
     public ResponseEntity<?> getEmployeeById(
-            @PathVariable Long id) {
+            @PathVariable long id) {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
@@ -74,14 +74,15 @@ public class AdminEmployeeController {
 // ✅ Fixed updateEmployee
 @PutMapping("/{id}")
 public ResponseEntity<?> updateEmployee(
-        @PathVariable Long id,
+        @PathVariable long id,
         @RequestBody User updatedUser) {
 
-    User user = userRepository.findById(id)
-            .orElseThrow(() ->
-                    new ResourceNotFoundException("Employee not found"));
+    User user = Objects.requireNonNull(
+            userRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found")),
+            "Employee not found"
+    );
 
-    // Only update fields that are sent (not null)
     if (updatedUser.getName() != null)
         user.setName(updatedUser.getName());
 
@@ -101,11 +102,11 @@ public ResponseEntity<?> updateEmployee(
         user.setDesignation(updatedUser.getDesignation());
 
     if (updatedUser.getSalary() != null) {
-    if (updatedUser.getSalary() < 0) {
-        throw new BadRequestException("Salary cannot be negative");
+        if (updatedUser.getSalary() < 0) {
+            throw new BadRequestException("Salary cannot be negative");
+        }
+        user.setSalary(updatedUser.getSalary());
     }
-    user.setSalary(updatedUser.getSalary());
-}
 
     if (updatedUser.getRole() != null)
         user.setRole(updatedUser.getRole());
@@ -116,16 +117,18 @@ public ResponseEntity<?> updateEmployee(
 }
 
     // DELETE EMPLOYEE
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEmployee(
-            @PathVariable Long id) {
+   @DeleteMapping("/{id}")
+public ResponseEntity<?> deleteEmployee(
+        @PathVariable long id) {
 
-        User user = userRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Employee Not Found"));
+    User user = Objects.requireNonNull(
+            userRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee Not Found")),
+            "Employee Not Found"
+    );
 
-        userRepository.delete(user);
+    userRepository.delete(user);
 
-        return ResponseEntity.ok("Employee Deleted Successfully");
-    }
+    return ResponseEntity.ok("Employee Deleted Successfully");
+}
 }

@@ -7,6 +7,7 @@ import com.demo.demo.repository.AttendanceRepository;
 import com.demo.demo.repository.UserRepository;
 import com.demo.demo.service.AttendanceService;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -15,31 +16,30 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+
 @Service
 @RequiredArgsConstructor
-public class AttendanceServiceImpl
-        implements AttendanceService {
+public class AttendanceServiceImpl implements AttendanceService {
 
     private final AttendanceRepository attendanceRepository;
     private final UserRepository userRepository;
 
     @Override
-    public Attendance markAttendance(Long employeeId) {
+    public Attendance markAttendance(@NonNull Long employeeId) {
 
         User employee = userRepository.findById(employeeId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Employee not found"));
+                        new ResourceNotFoundException("Employee not found"));
 
         LocalDate today = LocalDate.now();
 
         attendanceRepository
                 .findByEmployeeAndDate(employee, today)
-                .ifPresent(attendance -> {
-                    throw new RuntimeException(
-                            "Attendance already marked today");
+                .ifPresent(a -> {
+                    throw new RuntimeException("Attendance already marked today");
                 });
 
+        // ✅ build first, then save
         Attendance attendance = Attendance.builder()
                 .date(today)
                 .present(true)
@@ -51,40 +51,34 @@ public class AttendanceServiceImpl
     }
 
     @Override
-    public Attendance checkOut(Long employeeId) {
+    public Attendance checkOut(@NonNull Long employeeId) {
 
         User employee = userRepository.findById(employeeId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Employee not found"));
+                        new ResourceNotFoundException("Employee not found"));
 
         Attendance attendance = attendanceRepository
                 .findByEmployeeAndDate(employee, LocalDate.now())
                 .orElseThrow(() ->
-                        new RuntimeException(
-                                "Attendance not found for today"));
+                        new RuntimeException("Attendance not found for today"));
 
-        attendance.setCheckOutTime(
-                LocalTime.now().toString());
+        attendance.setCheckOutTime(LocalTime.now().toString());
 
         return attendanceRepository.save(attendance);
     }
 
     @Override
-    public List<Attendance> getEmployeeAttendance(
-            Long employeeId) {
+    public List<Attendance> getEmployeeAttendance(@NonNull Long employeeId) {
 
         User employee = userRepository.findById(employeeId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Employee not found"));
+                        new ResourceNotFoundException("Employee not found"));
 
         return attendanceRepository.findByEmployee(employee);
     }
 
     @Override
     public List<Attendance> getAllAttendance() {
-
         return attendanceRepository.findAll();
     }
 }
