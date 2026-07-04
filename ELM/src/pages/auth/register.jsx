@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../api'; // adjust path based on where your api.js is
+
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -38,7 +40,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      await axios.post('/auth/register', {
+      await api.post('/auth/register', {
         name: formData.name,
         email: formData.email,
         password: formData.password,

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../api'; // adjust path based on where your api.js is
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('/auth/login', {
+      const response = await api.post('/auth/login', {
         email,
         password,
       });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../api'; // adjust path based on where your api.js is
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -29,7 +30,7 @@ const ForgotPassword = () => {
         setLoading(true);
 
         try {
-            await axios.post('/auth/forgot-password', { email });
+            await api.post('/auth/forgot-password', { email });
             setSuccess('Reset link sent! Please check your email.');
         } catch (err) {
             if (err.response?.status === 404) {
