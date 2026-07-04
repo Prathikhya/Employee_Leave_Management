@@ -19,7 +19,8 @@ public class CorsConfig {
         // Frontend URL
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:5173",
-                "http://127.0.0.1:5173"
+                "http://127.0.0.1:5173",
+                "https://employee-leave-management-j1eb8uhm0-prathikhyas-projects.vercel.app/"
         ));
 
         // Allowed HTTP methods
