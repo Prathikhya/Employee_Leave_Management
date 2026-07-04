@@ -13,7 +13,7 @@ function ResetPassword() {
     const handleSubmit = async () => {
 
         await axios.post(
-            "http://localhost:8080/auth/reset-password",
+            "/auth/reset-password",
             {
                 token,
                 newPassword: password
