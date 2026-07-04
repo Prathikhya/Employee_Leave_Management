@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // import axios from 'axios';
-import api from '../api'; // adjust path based on where your api.js is
+import api from "../../api";
 
 const Login = () => {
   const [email, setEmail] = useState('');
