@@ -22,7 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin("*")
+// @CrossOrigin("*")
 public class AuthController {
 
     @Autowired
