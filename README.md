@@ -7,6 +7,7 @@ A full-stack Employee Leave Management System developed using React.js and Sprin
 - Employee Leave Application System
 - JWT Authentication & Authorization
 - Role-Based Access Control (Admin, Moderator, User)
+- Centralized MySQL
 - User Registration & Login
 - Secure Spring Security Integration
 - Leave Request Management
@@ -17,23 +18,14 @@ A full-stack Employee Leave Management System developed using React.js and Sprin
 - Protected Routes
 - Form Validation
 - Session Handling using JWT Tokens
+- Cloud-deployed: frontend on Vercel, backend on Render, database on Railway
+- CORS-secured 
 
 
-# Tech Stack
+## Tech Stack
+**Frontend:** React.js
+**Backend:** Spring Boot (REST API)
+**Database:** MySQL
+**Auth:** JWT
+**Deployment:** Vercel (frontend) · Render (backend) · Railway (MySQL)
 
-# Frontend
-- React.js
-- Bootstrap
-- Axios
-- React Router DOM
-
-
-# Backend
-- Spring Boot
-- Spring Security
-- JWT Authentication
-- Spring Data JPA
-- Hibernate
-
-# Database
-- MySQL
