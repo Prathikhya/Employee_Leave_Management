@@ -10,27 +10,25 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
-
 
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableMethodSecurity // ← enables @PreAuthorize in controllers
 public class SecurityConfig {
 
-        @Autowired
-private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     private final JwtAuthFilter jwtAuthFilter;
 
     private final AuthenticationProvider authenticationProvider;
-
-    
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
@@ -48,21 +46,25 @@ private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
                 .authorizeHttpRequests(auth -> auth
 
+                        // Public endpoints
                         .requestMatchers("/auth/**")
                         .permitAll()
 
+                        // Super Admin only
+                        .requestMatchers("/super-admin/**")
+                        .hasRole("SUPER_ADMIN")
+
+                        // Admin endpoints
                         .requestMatchers("/admin/**")
-                        .hasRole("ADMIN")
+                        .hasAnyRole("ADMIN", "SUPER_ADMIN")
 
+                        // Manager endpoints
                         .requestMatchers("/manager/**")
-                        .hasAnyRole("ADMIN", "MANAGER")
+                        .hasAnyRole("ADMIN", "MANAGER", "SUPER_ADMIN")
 
+                        // Employee endpoints
                         .requestMatchers("/employee/**")
-                        .hasAnyRole(
-                                "ADMIN",
-                                "MANAGER",
-                                "EMPLOYEE"
-                        )
+                        .hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE", "SUPER_ADMIN")
 
                         .anyRequest()
                         .authenticated()
@@ -75,17 +77,13 @@ private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .exceptionHandling(ex -> ex
-    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-    .accessDeniedHandler((request, response, accessDeniedException) -> {
-        response.setStatus(403);
-        response.setContentType("application/json");
-        response.getWriter().write("{\"message\": \"Access Denied\"}");
-    })
-
-
-    
-
-);
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.setStatus(403);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"message\": \"Access Denied\"}");
+                        })
+                );
 
         return http.build();
     }

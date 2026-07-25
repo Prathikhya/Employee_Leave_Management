@@ -12,6 +12,11 @@ import Register from '../pages/auth/register'
 import ForgotPassword from '../pages/auth/ForgotPassword'
 import ResetPassword from '../pages/auth/ResetPassword'
 
+// Super Admin pages
+import SuperAdminDashboard from '../pages/superadmin/SuperAdminDashboard'
+import ManageAdmins from '../pages/superadmin/ManageAdmins'
+import ManageUsers from '../pages/superadmin/ManageUsers'
+
 
 // Admin pages
 import AdminDashboard from '../pages/admin/AdminDashboard'
@@ -80,7 +85,14 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
 
+
       >
+        {/* Super Admin routes */}
+        <Route path="/superadmin/superadmindashboard" element={<SuperAdminDashboard />} />
+        <Route path="/superadmin/manageadmins" element={<ManageAdmins />} />
+        <Route path="/superadmin/manageusers" element={<ManageUsers />} />
+
+
         {/* Admin routes */}
         <Route path="/admin/admindashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         <Route path="/admin/adminreports" element={<AdminRoute><AdminReports /></AdminRoute>} />

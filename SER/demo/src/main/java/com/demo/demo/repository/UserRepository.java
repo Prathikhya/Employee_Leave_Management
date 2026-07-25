@@ -1,8 +1,12 @@
 package com.demo.demo.repository;
 
+import java.util.List;
 import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.demo.demo.entity.User;
+import com.demo.demo.enums.Role;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -11,4 +15,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByResetToken(String resetToken);
 
     boolean existsByEmail(String email);
+
+    List<User> findByRole(Role role);
+
+    long countByRole(Role role);
 }
