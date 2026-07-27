@@ -41,6 +41,11 @@ public class AuthController {
     public ResponseEntity<?> register(
           @Valid @RequestBody RegisterRequest request){
 
+        if (request.getRole() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("message", "Role is required"));
+        }
+
         if(userRepository.existsByEmail(request.getEmail())){
 
             return ResponseEntity.badRequest()

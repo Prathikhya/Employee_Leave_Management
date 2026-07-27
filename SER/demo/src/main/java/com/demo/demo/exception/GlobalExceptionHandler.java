@@ -2,6 +2,7 @@ package com.demo.demo.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -26,6 +27,30 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, String>> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        String message = "Invalid request payload";
+
+        if (ex.getMostSpecificCause() instanceof IllegalArgumentException illegalArgumentException) {
+            message = illegalArgumentException.getMessage();
+        }
+
+        error.put("message", message);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgumentException(
+            IllegalArgumentException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("message", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     // Invalid Login

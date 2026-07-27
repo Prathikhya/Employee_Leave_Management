@@ -16,6 +16,7 @@ import ResetPassword from '../pages/auth/ResetPassword'
 import SuperAdminDashboard from '../pages/superadmin/SuperAdminDashboard'
 import ManageAdmins from '../pages/superadmin/ManageAdmins'
 import ManageUsers from '../pages/superadmin/ManageUsers'
+import SuperAdminSidebar from '../pages/superadmin/SuperAdminSidebar'
 
 
 // Admin pages
@@ -91,6 +92,7 @@ const AppRoutes = () => {
         <Route path="/superadmin/superadmindashboard" element={<SuperAdminDashboard />} />
         <Route path="/superadmin/manageadmins" element={<ManageAdmins />} />
         <Route path="/superadmin/manageusers" element={<ManageUsers />} />
+        <Route path="/superadmin/superadminsidebar" element={<SuperAdminSidebar />} />
 
 
         {/* Admin routes */}

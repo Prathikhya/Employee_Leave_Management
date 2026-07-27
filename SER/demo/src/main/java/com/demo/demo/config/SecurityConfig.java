@@ -14,20 +14,20 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.http.HttpMethod;
 
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableMethodSecurity // ← enables @PreAuthorize in controllers
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     private final JwtAuthFilter jwtAuthFilter;
-
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
@@ -46,28 +46,32 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        // Public endpoints
-                        .requestMatchers("/auth/**")
-                        .permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // Super Admin only
+                        // ✅ Public endpoints
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/auth/register").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/forgot-password").permitAll()
+                        .requestMatchers("/auth/reset-password").permitAll()
+
+                        // ✅ Super Admin only
                         .requestMatchers("/super-admin/**")
                         .hasRole("SUPER_ADMIN")
 
-                        // Admin endpoints
+                        // ✅ Admin endpoints
                         .requestMatchers("/admin/**")
                         .hasAnyRole("ADMIN", "SUPER_ADMIN")
 
-                        // Manager endpoints
+                        // ✅ Manager endpoints
                         .requestMatchers("/manager/**")
                         .hasAnyRole("ADMIN", "MANAGER", "SUPER_ADMIN")
 
-                        // Employee endpoints
+                        // ✅ Employee endpoints
                         .requestMatchers("/employee/**")
                         .hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE", "SUPER_ADMIN")
 
-                        .anyRequest()
-                        .authenticated()
+                        .anyRequest().authenticated()
                 )
 
                 .authenticationProvider(authenticationProvider)

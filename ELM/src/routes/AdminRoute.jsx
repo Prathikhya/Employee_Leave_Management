@@ -6,7 +6,7 @@ const AdminRoute = ({ children }) => {
 
     if (
         role !== "MANAGER" &&
-        role !== "ADMIN"
+        role !== "ADMIN" && role !== "SUPER_ADMIN"
     ) {
         return <Navigate to="/unauthorized" />;
     }
