@@ -1,4 +1,5 @@
 import React from "react";
+import AdminSidebar from "./AdminSidebar";
 import { NavLink } from "react-router-dom";
 
 
@@ -58,6 +59,8 @@ const Dashboard = () => {
 
     
         <div className="min-h-screen bg-slate-100">
+
+      <AdminSidebar />
         {/* Main Content */}
         <div className="flex-grow-1 p-4">
 

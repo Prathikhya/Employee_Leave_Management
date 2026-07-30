@@ -48,12 +48,15 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
+                        
+
                         // ✅ Public endpoints
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/auth/register").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/auth/forgot-password").permitAll()
                         .requestMatchers("/auth/reset-password").permitAll()
+                        .requestMatchers("/contact/**").permitAll()
 
                         // ✅ Super Admin only
                         .requestMatchers("/super-admin/**")
